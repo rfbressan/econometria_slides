@@ -41,98 +41,85 @@ library(tidyverse)
 library(pander)
 library(ggthemes)
 library(gapminder)
-# library(emo)
-# library(countdown)
 library(xaringanExtra)
-
-# countdown style
-# countdown(
-#   color_border              = "#d90502",
-#   color_text                = "black",
-#   color_running_background  = "#d90502",
-#   color_running_text        = "white",
-#   color_finished_background = "white",
-#   color_finished_text       = "#d90502",
-#   color_finished_border     = "#d90502"
-# )
 ```
 
 
 
-# Welcome to ScPoEconometrics!
+# Bem-vindos a Econometria I!
 
 --
 
-- In this course you will learn the core tools of ***econometrics***.
+- Neste curso você aprenderá as principais ferramentas de ***econometria***.
  
 --
 
-- You will also learn to use the `R` programming language!
+- Você também aprenderá a usar a linguagem de programação `R`!
 
 --
 
-## What is *econometrics*?
+## O que é *econometria*?
 
-- A set of ***techniques and methods*** to answer (economic) questions with ***data***.
+- Um conjunto de ***técnicas e métodos*** para responder questões (econômicas) com ***dados***.
 
-- Some examples!
+- Alguns exemplos!
 
 ---
 
-# Answering Important Questions with Econometrics
+# Respondendo a perguntas importantes com econometria
 
 [<ru-blockquote>
-Does immigration *lead to* lower wages and/or higher unemployment for locals?
+A imigração *leva* a salários mais baixos e/ou desemprego mais alto para os habitantes locais?
 </ru-blockquote>](http://davidcard.berkeley.edu/papers/mariel-impact.pdf)
 
 --
 
 [<ru-blockquote>
-Does raising the minimum wage *reduce* employment for the low-skilled?
+Aumentar o salário mínimo *reduz* o emprego para os menos qualificados?
 </ru-blockquote>](http://davidcard.berkeley.edu/papers/njmin-aer.pdf)
 
 --
 
 [<ru-blockquote>
-Does getting a college degree *afford* higher wages?
+Obter um diploma universitário * oferece * salários mais altos?
 </ru-blockquote>](http://davidcard.berkeley.edu/papers/causal_educ_earnings.pdf)
 
 --
 
 [<ru-blockquote>
-Does higher public debt levels *lead to* lower economic growth?
+Níveis mais altos de dívida pública *levam* a um menor crescimento econômico?
 </ru-blockquote>](https://www.imf.org/external/pubs/ft/wp/2014/wp1434.pdf)
 
 --
 
 [<ru-blockquote>
-Does the neighborhood you grew up in have an *impact* on your life outcomes?
+O bairro em que você cresceu tem um *impacto* nos resultados de sua vida?
 </ru-blockquote>](https://academic.oup.com/qje/article/133/3/1107/4850660)
-
 ---
 
-# Causality
+<!-- # Causality -->
 
-* Notice that ***many other factors could have caused*** each of the outcomes mentioned.
+<!-- * Notice that ***many other factors could have caused*** each of the outcomes mentioned. -->
 
---
+<!-- -- -->
 
-* Want to focus on ***causal impact*** of just one of these factors (immigration, minimum wage, education ,etc.)
+<!-- * Want to focus on ***causal impact*** of just one of these factors (immigration, minimum wage, education ,etc.) -->
 
---
+<!-- -- -->
 
-* Econometrics is often about spelling out ***conditions*** under which we can ***claim to measure causal relationships***.
+<!-- * Econometrics is often about spelling out ***conditions*** under which we can ***claim to measure causal relationships***. -->
 
-* We will encounter the most basic of those conditions, and talk about some potential pitfalls.
+<!-- * We will encounter the most basic of those conditions, and talk about some potential pitfalls. -->
 
-* ["Credibility Revolution"](https://www.aeaweb.org/articles?id=10.1257/jep.24.2.3) in econometrics over the past 30 years ([2022 Economics Nobel](https://www.nobelprize.org/prizes/economic-sciences/2021/press-release/) awarded to some of the main protagonists of this "revolution")
+<!-- * ["Credibility Revolution"](https://www.aeaweb.org/articles?id=10.1257/jep.24.2.3) in econometrics over the past 30 years ([2022 Economics Nobel](https://www.nobelprize.org/prizes/economic-sciences/2021/press-release/) awarded to some of the main protagonists of this "revolution") -->
 
 ---
 
 layout: false
-class: title-slide-section-red, middle
+class: clear, center, middle
 
-# R
+background-image: url(../img/covers/r-programming.jpeg)
+background-size: cover
 
 ---
 
@@ -144,36 +131,36 @@ layout: true
 
 ## What is `R`?
 
-`R` is a __programming language__ with powerful statistical and graphic capabilities.
+`R` é uma __linguagem de programação__ com poderosos recursos estatísticos e gráficos.
 
 --
 
-## Why are we using `R`?<sup>1</sup>
+## Por que vamos usar `R`?<sup>1</sup>
 
 .footnote[
-[1]: This list has been inspired by [Ed Rubin's](https://github.com/edrubin/EC421S19).  
-<span style="visibility:hidden">[2]: Learning `R` definitely requires time and effort but it's worth it, trust me! `r emo::ji("muscle")`.</span>
+[1]: Esta lista foi inspirada por [Ed Rubin's](https://github.com/edrubin/EC421S19).
+<span style="visibility:hidden">[2]: Aprender `R` definitivamente requer tempo e esforço, mas vale a pena, confie em mim! `r emo::ji("muscle")`.</span>
 ]
 
 --
 
-1. `R` is __free__ and __open source__—saving both you and the university 💰💵💰.
+1. `R` é __gratuito__ e __open source__— salvando você e a universidade 💰💵💰.
 
 --
 
-1. `R` is very __flexible and powerful__—adaptable to nearly any task, (data cleaning, data visualization, econometrics, spatial data analysis, machine learning, web scraping, etc.)
+1. O `R` é muito __flexível e poderoso__—adaptável a praticamente qualquer tarefa (limpeza de dados, visualização de dados, econometria, análise de dados espaciais, aprendizado de máquina, web scraping, etc.)
 
 --
 
-1. `R` has a vibrant, [thriving online community](https://stackoverflow.com/questions/tagged/r) that will (almost) always have a solution to your problem.
+1. O `R` tem uma vibrante [comunidade online](https://stackoverflow.com/questions/tagged/r) que (quase) sempre terá uma solução para o seu problema.
 
 --
 
-1. If you put in the work<sup>2</sup>, you will come away with a __very valuable and useful__ tool.
+1. Se você se esforçar<sup>2</sup>, sairá com uma ferramenta __muito valiosa e útil__.
 
 .footnote[
-<span style="visibility:hidden">[1]: This list has been inspired by [Ed Rubin's](https://github.com/edrubin/EC421S19).</span>  
-[2]: Learning `R` definitely requires time and effort but it's worth it, trust me! `r emo::ji("muscle")`
+<span style="visibility:hidden">[1]: sta lista foi inspirada por [Ed Rubin's](https://github.com/edrubin/EC421S19).</span>  
+[2]: Aprender `R` definitivamente requer tempo e esforço, mas vale a pena, acreditem! `r emo::ji("muscle")`
 ]
 
 <!-- --- -->
@@ -205,9 +192,9 @@ layout: true
 ---
 
 layout: false
-class: title-slide-section-red, middle
+class: title-slide-section-grey, middle
 
-# First Taste of R 
+# Primeiro Contato com o R 
 
 ---
 
@@ -217,25 +204,24 @@ layout: true
 
 ---
 
-# In Practice: Data Wrangling
+# Na Prática: Manipulando Dados
 
 --
 
-* You will spend a lot of time preparing data for further analysis.
+* Você gastará muito tempo preparando dados para análise posterior.
 
 --
 
-* The `gapminder` dataset contains data on life expectancy, GDP per capita and population by country between 1952 and 2007.
+* O conjunto de dados `gapminder` contém dados sobre expectativa de vida, PIB per capita e população por país entre 1952 e 2007.
 
-* Suppose we want to know the average life expectancy and average GDP per capita for each continent in each year.
-
---
-
-* We need to group the data by continent *and* year, then compute the average life expectancy and average GDP per capita
+* Suponha que queremos saber a expectativa média de vida e o PIB médio per capita para cada continente em cada ano.
 
 --
 
-.left-column[
+* Precisamos agrupar os dados por continente *e* ano e, em seguida, calcular a expectativa média de vida e o PIB médio per capita
+--
+
+.pull-left[
 ```{r, gapminder, echo = T, eval = F}
 # load gapminder package
 library(gapminder)
@@ -248,18 +234,18 @@ head(gapminder,n = 4)
 ```
 ]
 
-.right-column[
+.pull-right[
 ```{r, gapminder, echo = F, eval = T}
 ```
 ]
 
 ---
 
-# In Practice: Data Wrangling
+# Na Prática: Manipulando Dados
 
-* There are always several ways to achieve a goal. (As in life `r emo::ji("smile")`)
+* Há sempre várias maneiras de atingir um objetivo. (Como na vida `r emo::ji("smile")`)
 
-* Here we will only focus on the `dplyr` way:
+* Aqui vamos focar apenas no jeito `tidyverse`:
 
 ```{r}
 # compute the required statistics
@@ -277,12 +263,12 @@ head(gapminder_dplyr, n = 5)
 
 ---
 
-# Visualisation
+# Visualização
 
 .pull-left[
-* Now we could *look* at the result in `gapminder_dplyr`, or compute some statistics from it. 
+* Agora podemos *olhar* o resultado em `gapminder_dplyr`, ou calcular algumas estatísticas a partir dele.
 
-* Nothing beats a picture, though:
+* Nada supera uma figura, no entanto:
 
 ```{r gampminder_plot, eval = FALSE}
 ggplot(data = gapminder_dplyr, 
@@ -291,10 +277,10 @@ ggplot(data = gapminder_dplyr,
                      color = continent,
                      size = count)) +
   geom_point(alpha = 1/3) +
-  labs(x = "Average life expectancy",
-       y = "Average GDP per capita",
-       color = "Continent",
-       size = "Nb of countries")
+  labs(x = "Expectativa de vida média",
+       y = "PIB per capita médio",
+       color = "Continente",
+       size = "Núm. de países")
 ```
 ]
 
@@ -303,55 +289,13 @@ ggplot(data = gapminder_dplyr,
 ```
 ]
 
----
-
-# Animated Plotting `r emo::ji("ok_hand")` <sup>1</sup>
-
-```{r, example: gganimate, include = F, cache = T}
-# The package for animating ggplot2
-library(gganimate)
-# As before
-# gg <- ggplot(
-#   data = gapminder %>% filter(continent != "Oceania"),
-#   aes(gdpPercap, lifeExp, size = pop, color = country)
-# ) +
-# geom_point(alpha = 0.7, show.legend = FALSE) +
-# scale_colour_manual(values = country_colors) +
-# scale_size(range = c(2, 12)) +
-# scale_x_log10("GDP per capita", label = scales::comma) +
-# facet_wrap(~continent) +
-# theme_pander(base_size = 16) +
-# theme(panel.border = element_rect(color = "grey90", fill = NA)) +
-# # Here comes the gganimate-specific bits
-# labs(title = "Year: {frame_time}") +
-# ylab("Life Expectancy") +
-# transition_time(year) +
-# ease_aes("linear")
-# # Save the animation
-# anim_save(
-#   animation = gg,
-#   filename = "ex_gganimate.gif",
-#   path = "chapter_in1les/figure-html",
-#   width = 9,
-#   height = 4,
-#   units = "in",
-#   res = 150,
-#   nframes = 56
-# )
-```
-
-.center[![Gapminder](chapter_intro_files/figure-html/ex_gganimate.gif)]
-
-.footnote[
-[1]: This animation is taken from [Ed Rubin](https://raw.githack.com/edrubin/EC421S19/master/LectureNotes/01Intro/01_intro.html#40).
-]
 
 ---
 
 layout: false
-class: title-slide-section-red, middle
+class: title-slide-section-grey, middle
 
-# R 101: Here Is Where You Start
+# R 101: Aqui é onde você começa
 
 ---
 
@@ -361,30 +305,47 @@ layout: true
 
 ---
 
-# Start your `RStudio`!
+# Inicie o `RStudio`!
 
-## First Glossary of Terms
+## Glossário de Termos
 
-* `R`: a programming language.
+* [`R`](https://cran.r-project.org/): é uma linguagem de programação
 
-* `RStudio`: an integrated development environment (IDE) to work with `R`.
-
---
-
-* *command*: user input (text or numbers) that `R` *understands*.
-
-* *script*: a list of commands collected in a text file, each separated by a new line, to be run one after the other.
+* [`RStudio`](https://www.rstudio.com/): é um ambiente integrado de desenvolvimento (IDE) para se trabalhar com o `R`.
 
 --
 
-* To run a script, you need to highlight the relevant code lines and hit `Ctrl`+`Enter` (Windows) or `Cmd`+`Enter` (Mac).
+* *comando*: entrada do usuário (texto ou números) que o `R` *entende*.
 
+* *script*: uma lista de comandos colados em um arquivo de texto, cada um separado por uma nova linha, para serem executados um após o outro.
+
+--
+
+* Para executar um script, você precisa destacar as linhas de código relevantes e pressionar `Ctrl`+`Enter` (Windows) ou `Cmd`+`Enter` (Mac).
 ---
 
 # `RStudio` Layout
 
 ```{r, echo = F, out.width = "600px"}
 knitr::include_graphics("chapter_intro_files/figure-html/rstudio.png")
+```
+
+---
+
+# RStudio Cloud
+
+* A empresa RStudio PBC oferece um serviço de hospedagem em nuvem, chamado [RStudio Cloud](https://rstudio.cloud/), da IDE RStudio
+
+* Existe um plano gratuito para uso (limite de 1GB de RAM e 1 CPU por projeto)
+
+* Pode ser uma boa opção para quem não deseja instalar localmente a IDE
+
+---
+
+# RStudio Cloud
+
+```{r , out.width="800px", echo=FALSE}
+knitr::include_graphics("../img/photos/rstudio-cloud.png")
 ```
 
 ---
