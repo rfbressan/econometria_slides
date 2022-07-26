@@ -1,16 +1,22 @@
-The material below is a complement to the lecture slides and should be used as reference. Readings in **bold** are **very highly** recommended.
+O material abaixo é um complemento aos slides da aula e deve ser usado como referência. Leituras em **negrito** são **muito** recomendadas.
+
+### Livros-Texto
+
+[WOOL] WOOLDRIDGE, Jeffrey M. Introdução à econometria: uma abordagem moderna. São Paulo: Cengage Learning, 2016. Tradução da 4ª edição norte-americana por José Antonio Ferreira.
+
+[MM] ANGRIST, Joshua D.; PISCHKE, Jörn-Steffen. Mastering'metrics: The path from cause to effect. Princeton university press, 2014.
 
 
-### Lecture 1: Introduction
+### Aula 1: Introdução
 
-[**1.1 and 1.2, Introduction to Econometrics with R**](https://scpoecon.github.io/ScPoEconometrics/R-intro.html)
-
-**Introduction, Mastering Metrics**
+**[WOOL] Capítulo 1**
 
 [**Angrist and Pischke (2010 JEP), *The Credibility Revolution in Empirical Economics***](https://www.aeaweb.org/articles?id=10.1257/jep.24.2.3)  
 
+[1.1 and 1.2, Introduction to Econometrics with R](https://scpoecon.github.io/ScPoEconometrics/R-intro.html)
 
-### Lecture 2/3: Tidying, Visualising and Summarising Data
+
+### Aula 2/3: Organizando, Visualizando e Resumindo Dados
 
 [**Data transformation, R for Data Science**](https://r4ds.had.co.nz/transform.html)
 
@@ -19,60 +25,66 @@ The material below is a complement to the lecture slides and should be used as r
 Chapters [2](https://moderndive.com/2-viz.html) and [3](https://moderndive.com/3-wrangling.html), ModernDive
 
 
-### Lecture 4: Simple Linear Regression
+### Aula 4: Regressão Linear Simples
+
+**[WOOL] Capítulo 2**
 
 [**Chapter 3, Introduction to Econometrics with R**](https://scpoecon.github.io/ScPoEconometrics/linreg.html)
 
 [Chapter 5, ModernDive](https://moderndive.com/5-regression.html)
 
 
-### Lecture 5: Introduction to Causality
+### Aula 5: Introdução a Causalidade
 
 [**Chapter 7, Introduction to Econometrics with R**](https://scpoecon.github.io/ScPoEconometrics/causality.html)
 
-**Chapter 1, Mastering Metrics**
+**[MM] Capítulo 1**
 
 ["Potential outcomes causal model", Causal Inference: The Mixtape, Scott Cunningham](http://scunning.com/cunningham_mixtape.pdf)
 
 "Introduction" and "Counterfactuals and the Potential Outcome Model", Counterfactuals and Causal Inference, Morgan and Winship, 2015
 
 
-### Lecture 6: Multiple Linear Regression
+### Aula 6: Regressão Linear Múltipla
+
+**[WOOL] Capítulo 3**
 
 [**Chapter 4, Introduction to Econometrics with R**](https://scpoecon.github.io/ScPoEconometrics/multiple-reg.html)
 
-**Chapter 2, Mastering Metrics**
+**[MM] Capítulo 2**
 
 [Chapter 6, ModernDive](https://moderndive.com/6-multiple-regression.html)
 
 
-### Lecture 7: Sampling
+### Aula 7: Amostragem
 
 [**Chapter 7, ModernDive**](https://moderndive.com/7-sampling.html)
 
 
-### Lecture 8: Confidence Intervals and Hypothesis Testing
+### Aula 8: Intervalos de Confiança e Testes de Hipóteses
 
 **Chapters [8](https://moderndive.com/8-confidence-intervals.html) and [9](https://moderndive.com/9-hypothesis-testing.html), ModernDive**
 
-### Lecture 9: Regression Inference
+### Aula 9: Inferência da regressão
+
+**[WOOL] Capítulo 4**
 
 [**Chapter 6, Introduction to Econometrics with R**](https://scpoecon.github.io/ScPoEconometrics/std-errors.html)
 
 [**Chapter 10, ModernDive**](https://moderndive.com/10-inference-for-regression.html)
 
-### Lecture 10: Differences-in-Differences
+### Aula 10: Diferenças em diferenças
 
-**Chapter 5, Mastering Metrics**
+**[MM] Capítulo 5**
 
 [**Card and Krueger (1994 AER), "Minimum Wages and Employment: A Case Study of the Fast-Food Industry in New Jersey and Pennsylvania"**](http://davidcard.berkeley.edu/papers/njmin-aer.pdf)
 
 
-### Lecture 11: Regression Discontinuity
+### Aula 11: Regressão em Descontinuidade
 
-**Chapter 4, Mastering Metrics**
+**[MM] Capítulo 4**
 
-**Andrew Heiss' excellent [slides](https://evalsp20.classes.andrewheiss.com/slides/PMAP-8521_2020-04-01.pdf) and [lecture videos](https://evalsp20.classes.andrewheiss.com/class/11-class/)**]
+**Andrew Heiss' excellent [slides](https://evalsp20.classes.andrewheiss.com/slides/PMAP-8521_2020-04-01.pdf) and [Aula videos](https://evalsp20.classes.andrewheiss.com/class/11-class/)**]
 
 [Chris Walters (2020), Regression Discontinuity Designs](https://www.aeaweb.org/webcasts/2020/mastering-mostly-harmless-econometrics-part-7)
 
@@ -83,5 +95,7 @@ Chapters [2](https://moderndive.com/2-viz.html) and [3](https://moderndive.com/3
 [Lee and Lemieux (2010 JEL), "Regression Discontinuity Designs in Economics"](https://www.princeton.edu/~davidlee/wp/RDDEconomics.pdf)
 
 
-### Lecture 12: Review Session
+### Aula 12: Revisão
+
+
 
