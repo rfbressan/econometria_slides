@@ -6,6 +6,8 @@
     <meta name="author" content="Rafael Bressan" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
     <script src="https://use.fontawesome.com/5235085b15.js"></script>
     <link rel="stylesheet" href="../css/scpo.css" type="text/css" />
     <link rel="stylesheet" href="../css/scpo-fonts.css" type="text/css" />
@@ -24,7 +26,7 @@ class: center, middle, inverse, title-slide
 ### Rafael Bressan
 ]
 .date[
-### UDESC/Esag </br> 2022-07-26
+### UDESC/Esag </br> 2022-07-27
 ]
 
 ---
@@ -89,7 +91,7 @@ Níveis mais altos de dívida pública *levam* a um menor crescimento econômico
 [&lt;ru-blockquote&gt;
 O bairro em que você cresceu tem um *impacto* nos resultados de sua vida?
 &lt;/ru-blockquote&gt;](https://academic.oup.com/qje/article/133/3/1107/4850660)
----
+
 
 &lt;!-- # Causality --&gt;
 
@@ -123,7 +125,7 @@ layout: true
 
 ---
 
-## What is `R`?
+## O que é o `R`?
 
 `R` é uma __linguagem de programação__ com poderosos recursos estatísticos e gráficos.
 
@@ -368,15 +370,15 @@ layout: true
 
 ---
 
-# R as a Calculator
+# R como calculadora
 
-* You can use the `R` console like a calculator
+* Você pode usar o console `R` como uma calculadora
 
-* Just type an arithmetic operation after `&gt;` and hit `Enter`!
+* Basta digitar uma operação aritmética após `&gt;` e pressionar `Enter`!
 
 --
 
-* Some basic arithmetic first:
+* Alguma aritmética básica primeiro:
 
 ```r
 4 + 1
@@ -387,15 +389,14 @@ layout: true
 ```
 
 ```r
-8 / 2
+8/2
 ```
 
 ```
 ## [1] 4
 ```
 
-
-* Great! What about this?
+* Excelente! O que dizer disso?
 
 ```r
 2^3
@@ -406,37 +407,12 @@ layout: true
 ```
 
 ```r
-# by the way: this is a comment! R therefore disregards it
+# a propósito: isso é um comentário! R, portanto, desconsidera
 ```
 
 ---
 
-class: inverse
-
-# Task 1
-
-
-1. Create a new R script (File `\(\rightarrow\)` New File `\(\rightarrow\)` R Script). Save it somewhere as `lecture_intro.R`.
-
-1. Type the following code in your script and run it. To run the code press `Ctrl` or `Cmd` + `Enter` (you can either highlight the code or just put your cursor at the end of the line)
-    
-    ```r
-    4 * 8
-    ```
-
-1. Type the following code in your script and run it. What happens if you only run the first line of the code?
-    
-    ```r
-    x = 5 # equivalently x &lt;- 5
-    x
-    ```
-Congratulations, you have created your first `R` "object"! Everything is an object in R! Objects are assigned using `=` or `&lt;-`.
-
-1. Create a new object named `x_3` to which you assign the cube of `x`. Note that to assign you need to use `=` or `&lt;-`. Use code to compute the cube, not a calculator.
-
----
-
-# Where to get Help?
+# Onde Conseguir Ajuda?
 
 .pull-left[
 `R` built-in `help`:
@@ -451,135 +427,103 @@ help(lm)   # help() is equivalent
 --
 
 .pull-right[
-In practice:
+Na prática&lt;sup&gt;1&lt;/sup&gt;:
 ![Learning R](chapter_intro_files/figure-html/learning_path.png)
 ]
 
----
-
-# Collaborate!
-
-&lt;img src="chapter_intro_files/figure-html/gator_error.jpg" alt="Gator collaboration" width="900" style="display: block; margin-left: auto; margin-right: auto"/&gt;
-
----
-
-# R Packages
-
-* `R` users contribute add-on data and functions as *packages*
-
-* Installing packages is easy! Just use the `install.packages` function:
-    
-    ```r
-    install.packages("ggplot2") # do NOT run this code on your end
-    ```
-
-* To *use* the contents of a packge, we must load it from our library using `library`:
-    
-    ```r
-    library(ggplot2)
-    ```
-
----
-
-# Vectors
-
-* The `c` function creates vectors, i.e. an array of elements.
-    
-    ```r
-    c(1, 3, 5, 7, 8, 9)
-    ```
-    
-    ```
-    ## [1] 1 3 5 7 8 9
-    ```
-    
---
-
-* Coercion to unique types:
-    
-    ```r
-    c(42, "Statistics", TRUE)
-    ```
-    
-    ```
-    ## [1] "42"         "Statistics" "TRUE"
-    ```
-
---
-
-* Creating a *range*
-    
-    ```r
-    1:10
-    ```
-    
-    ```
-    ##  [1]  1  2  3  4  5  6  7  8  9 10
-    ```
-
----
-
-# `data.frame`'s
-
-`data.frame`s are like spreadsheets.
-
-
-```r
-example_data = data.frame(x = c(1, 3, 5, 7),
-                          y = c(rep("Hello", 3), "Goodbye"),
-                          z = c("one", 2, "three", 4))
-example_data
-```
-
-```
-##   x       y     z
-## 1 1   Hello   one
-## 2 3   Hello     2
-## 3 5   Hello three
-## 4 7 Goodbye     4
-```
-
-In practice, you will be importing files that contain the data into `R` rather than creating `data.frame`s by hand.
-
----
-
-class: inverse
-
-# Task 2
-
-
-
-
-1. Find out (using `help()` or google) how to import a .csv file. Do NOT use the "Import Dataset" button, nor install a package.
-
-1. Import [gun_murders.csv](https://www.dropbox.com/s/zuk0qcfm3kyzs4e/gun_murders.csv?dl=1)&lt;sup&gt;1&lt;/sup&gt; in a new object `murders`. This file contains data on gun murders by US state in 2010. (Hint: objects are created using `=` or `&lt;-`).
-
-1. Ensure that `murders` is a data.frame by running:
-    
-    ```r
-    class(murder) # check class
-    ```
-
-1. Find out what variables are contained in `murders` by running:
-    
-    ```r
-    names(murders) # obtain variable names
-    ```
-
-1. View the contents of `murders` by clicking on `murders` in your workspace. What does the `total` variable correspond to?
-
 .footnote[
-[1]: This dataset is taken from the `dslabs` package.
+[1]: O passo 4 é clicar no link do [![](../img/logo/stack-overflow-logo.jpeg)](https://stackoverflow.com/)
 ]
+---
+
+# Pacotes no `R`
+
+* Usuários do `R` contribuem com dados e funções complementares como *pacotes*
+
+* Instalar pacotes é fácil! Basta usar a função `install.packages`:
+     
+     ```r
+     install.packages("ggplot2") # NÃO execute este código
+     ```
+
+* Para *usar* o conteúdo de um pacote, devemos carregá-lo de nossa biblioteca usando `library`:
+     
+     ```r
+     library(ggplot2)
+     ```
+---
+
+# Vetores
+
+* A função `c()` cria vetores, ou seja, um array de elementos.
+     
+     ```r
+     c(1, 3, 5, 7, 8, 9)
+     ```
+     
+     ```
+     ## [1] 1 3 5 7 8 9
+     ```
+    
+--
+
+* Coerção a tipos únicos:
+     
+     ```r
+     c(42, "Estatísticas", TRUE)
+     ```
+     
+     ```
+     ## [1] "42"           "Estatísticas" "TRUE"
+     ```
+
+--
+
+* Criando um *intervalo*
+     
+     ```r
+     1:10
+     ```
+     
+     ```
+     ##  [1]  1  2  3  4  5  6  7  8  9 10
+     ```
 
 ---
 
 # `data.frame`s
 
-Useful functions to describe a dataframe:
+`data.frame`s são como planilhas.
+
 
 ```r
-str(murders) # describes the data.frame
+example_data = data.frame(x = c(1, 3, 5, 7),
+                          y = c(rep("Olá", 3), "Adeus"),
+                          z = c("um", 2, "três", 4))
+example_data
+```
+
+```
+##   x     y    z
+## 1 1   Olá   um
+## 2 3   Olá    2
+## 3 5   Olá três
+## 4 7 Adeus    4
+```
+
+Na prática, você estará importando arquivos que contêm os dados para o `R` em vez de criar `data.frame`s manualmente.
+
+
+---
+
+# `data.frame`s
+
+
+
+Funções úteis para descrever um dataframe:
+
+```r
+str(murders) # descreve o data.frame
 ```
 
 ```
@@ -595,7 +539,7 @@ str(murders) # describes the data.frame
 
 
 ```r
-names(murders) # column names
+names(murders) # nomes de colunas
 ```
 
 ```
@@ -606,7 +550,7 @@ names(murders) # column names
 
 
 ```r
-nrow(murders) # number of rows
+nrow(murders) # número de linhas
 ```
 
 ```
@@ -617,7 +561,7 @@ nrow(murders) # number of rows
 
 
 ```r
-ncol(murders) # number of columns
+ncol(murders) # número de colunas
 ```
 
 ```
@@ -626,70 +570,73 @@ ncol(murders) # number of columns
 
 ---
 
-# Data on Gun Murders in the US
+# Dados sobre assassinatos com armas de fogo nos EUA
     
-* To access one of the variables **as a vector** we use the `$` operator as in `murders$state`.
-    
-    ```r
-    murders$state
-    ```
-    
-    ```
-    ##  [1] "Alabama"              "Alaska"               "Arizona"             
-    ##  [4] "Arkansas"             "California"           "Colorado"            
-    ##  [7] "Connecticut"          "Delaware"             "District of Columbia"
-    ## [10] "Florida"              "Georgia"              "Hawaii"              
-    ## [13] "Idaho"                "Illinois"             "Indiana"             
-    ## [16] "Iowa"                 "Kansas"               "Kentucky"            
-    ## [19] "Louisiana"            "Maine"                "Maryland"            
-    ## [22] "Massachusetts"        "Michigan"             "Minnesota"           
-    ## [25] "Mississippi"          "Missouri"             "Montana"             
-    ## [28] "Nebraska"             "Nevada"               "New Hampshire"       
-    ## [31] "New Jersey"           "New Mexico"           "New York"            
-    ## [34] "North Carolina"       "North Dakota"         "Ohio"                
-    ## [37] "Oklahoma"             "Oregon"               "Pennsylvania"        
-    ## [40] "Rhode Island"         "South Carolina"       "South Dakota"        
-    ## [43] "Tennessee"            "Texas"                "Utah"                
-    ## [46] "Vermont"              "Virginia"             "Washington"          
-    ## [49] "West Virginia"        "Wisconsin"            "Wyoming"
-    ```
+* Para acessar uma das variáveis **como vetor** usamos o operador `$` como em `murders$state`.
+     
+     ```r
+     murders$state
+     ```
+     
+     ```
+     ##  [1] "Alabama"              "Alaska"               "Arizona"             
+     ##  [4] "Arkansas"             "California"           "Colorado"            
+     ##  [7] "Connecticut"          "Delaware"             "District of Columbia"
+     ## [10] "Florida"              "Georgia"              "Hawaii"              
+     ## [13] "Idaho"                "Illinois"             "Indiana"             
+     ## [16] "Iowa"                 "Kansas"               "Kentucky"            
+     ## [19] "Louisiana"            "Maine"                "Maryland"            
+     ## [22] "Massachusetts"        "Michigan"             "Minnesota"           
+     ## [25] "Mississippi"          "Missouri"             "Montana"             
+     ## [28] "Nebraska"             "Nevada"               "New Hampshire"       
+     ## [31] "New Jersey"           "New Mexico"           "New York"            
+     ## [34] "North Carolina"       "North Dakota"         "Ohio"                
+     ## [37] "Oklahoma"             "Oregon"               "Pennsylvania"        
+     ## [40] "Rhode Island"         "South Carolina"       "South Dakota"        
+     ## [43] "Tennessee"            "Texas"                "Utah"                
+     ## [46] "Vermont"              "Virginia"             "Washington"          
+     ## [49] "West Virginia"        "Wisconsin"            "Wyoming"
+     ```
 
---
+---
+
+# Dados sobre assassinatos com armas de fogo nos EUA
+
 
 .pull-left[
-* We can check the type of `murders$state` with
-    
-    ```r
-    class(murders$state)
-    ```
-    
-    ```
-    ## [1] "character"
-    ```
+* Podemos verificar o tipo de `murders$state` com
+     
+     ```r
+     class(murders$state)
+     ```
+     
+     ```
+     ## [1] "character"
+     ```
 ]
 
 --
 
 .pull-right[
-* Or we use the column name or index: `murders[,"state"]` or `murders[,1]`
-    
-    ```r
-    class(murders[,"state"])
-    ```
-    
-    ```
-    ## [1] "character"
-    ```
+* Ou usamos o nome da coluna ou índice: `murders[,"state"]` ou `murders[,1]`
+     
+     ```r
+     class(murders[,"state"])
+     ```
+     
+     ```
+     ## [1] "character"
+     ```
 ]
 
 ---
 
-# Subsetting `data.frames`
+# _Subsetting_ `data.frames`
 
-* Subsetting a data.frame: `murders[row condition, column number]` or `murders[row condition, "column name"]`
+* _Subsetting_ um data.frame: `murders[row condition, column number]` ou `murders[row condition, "column name"]`
     
     ```r
-    # Only keep states with over 500 gun murders and keep only the "state" and "total" variables
+    # Mantenha apenas os estados com mais de 500 assassinatos com armas de fogo e mantenha apenas as variáveis "state" e "total"
     murders[murders$total &gt; 500, c("state", "total")]
     ```
     
@@ -702,7 +649,7 @@ ncol(murders) # number of columns
     ```
     
     ```r
-    # Only keep California and Texas and keep only the "state" and "total" variables
+    # Mantenha apenas a California e o Texas e mantenha apenas as variáveis "state" e "total"
     murders[murders$state %in% c("California", "Texas"), c("state", "total")]
     ```
     
@@ -714,33 +661,12 @@ ncol(murders) # number of columns
 
 ---
 
-class: inverse
 
-# Task 3
-
-
-1. How many observations are there in `murders`?
-
-1. How many variables? What are the data types of each variable?
-
-1. Remember that the colon operator `1:10` is just short for *construct a sequence from `1` to `10`* (i.e. 1, 2, 3, etc). Create a new object `murders_2` containing the rows 10 to 25 of `murders`.
-
-1. Create a new object `murders_3` which only contains the columns `state` and `total`. (Recall that `c` creates vectors.)
-
-1. Create a `total_percap` variable equal to the number of murders per 10,000 inhabitants by running the following code.
-    
-    ```r
-    murders$total_percap = (murders$total / murders$population) * 10000
-    ```
-
-Congratulations, you've created your first variable! Click on the `murders` object to see the new variable.
-
----
 
 layout: false
-class: title-slide-section-red, middle
+class: title-slide-section-grey, middle
 
-# Class Details
+# Detalhes sobre as Aulas
 
 ---
 
@@ -750,187 +676,166 @@ layout: true
 
 ---
 
-# This Course
+# Este Curso
 
-- Teach you the basics of ***linear regression***, ***statistical inference*** and ***impact evaluation***.
-
---
-
-- Equip you with a framework to think more deeply about ***causality***.
+- Ensina o básico de ***regressão linear simples e múltipla***, ***inferência estatística*** e ***teste de hipóteses***.
 
 --
 
-- Introduce you to the `R` software environment.
+- Apresentá-lo ao ambiente de software `R`.
 
 --
 
-- ⚠️ This is *not* a course about `R`.
+- ⚠️ Este *não* é um curso sobre `R`.
 
 --
 
-## Grading
+## Avaliação
 
-1. There will be ***five quizzes*** on Moodle roughly every two weeks `\(\rightarrow\)` 40%
-
---
-
-1. There will be ***two take home exams / case studies*** `\(\rightarrow\)` 60%
+1. Haverão ***seis listas de exercícios*** no Teams, aproximadamente uma a cada duas semanas `\(\rightarrow\)` 20%
 
 --
 
-1. There will be _no_ final exam 😅
+1. Haverão ***duas provas escritas presenciais*** `\(\rightarrow\)` 80%
+
+--
+
+1. Quem não obter média igual ou superior a 6.0, dentro das regras da UDESC/Esag, poderá fazer um exame final
 
 ---
 
 # Syllabus 🤞
 
 .pull-left[
-Lecture 1 (today): ***Introduction***
+Aula 1 (hoje): ***Introdução***
 
-*Quiz 1 (after lecture 2)*
+Aulas 2 and 3: ***Tidying, Visualising and Summarising Data***
 
-Lectures 2 and 3: ***Tidying, Visualising and Summarising Data***
+Aula 4: ***Regressão Linear Simples***
 
-*Quiz 2*
+Aula 5: ***Introdução a Causalidade***
 
-Lecture 4: ***Simple Linear Regression***
+*Lista 1*
 
-Lecture 5: ***Introduction to Causality***
+Aula 6: ***Regressão Linear Múltipla***
 
-*Midterm Project*
+Aula 7: ***Extensões da Regressão Linear***
 
-Lecture 6: ***Multiple Linear Regression***
-
-Lecture 7: ***Linear Regression Extensions***
+*Lista 2*
 ]
 
 .pull-right[
-*Quiz 3*
 
-Lecture 8: ***Sampling***
+*Prova 1*
 
-Lecture 9: ***Confidence Intervals and Hypothesis Testing***
+Aula 8: ***Amostragem***
 
-*Quiz 4*
+Aula 9: ***Teste de Hipóteses***
 
-Lecture 10: ***Statistical Inference***
+*Lista 3*
 
-Lecture 11: ***Regression Discontinuity***
+Aula 10: ***Inferência Estatística***
 
-*Quiz 5*
+Aula 11: ***Regressão em Descontinuidade***
 
-Lecture 12: ***Recap***
+*Lista 4*
 
-*Final Project*
+Aula 12: ***Revisão***
+
+*Prova 2*
 ]
 
 ---
 
-# Course Materials and Useful Resources
+# Materiais do Curso e Recursos Úteis
 
-&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; [Book](https://scpoecon.github.io/ScPoEconometrics/) &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; | &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; [Slides](https://github.com/ScPoEcon/ScPoEconometrics-Slides) &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; | &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; [Reading Suggestions](https://github.com/ScPoEcon/ScPoEconometrics-Slides/blob/master/syllabus.md) &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; | &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;  [Interactive R Apps](https://github.com/ScPoEcon/ScPoApps) &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;
--- | -- | --
+.panelset[
+.panel[.panel-name[Livros]
+* WOOLDRIDGE, Jeffrey M. Introdução à econometria: uma abordagem moderna. São Paulo: Cengage Learning, 2016. Tradução da 4ª edição norte-americana por José Antonio Ferreira.
 
---
+* GUJARATI, Damodar N. Econometria Básica. Rio de Janeiro: Campus, 2006.
 
-.pull-left[
-## Econometrics
-- [*Mastering Metrics* by Angrist and Pischke](https://uspc-spo.primo.exlibrisgroup.com/permalink/33USPC_SPO/1d4eftp/alma991003947949705808)
-- [*Introductory Econometrics: A Modern Approach* by Wooldridge](https://uspc-spo.primo.exlibrisgroup.com/permalink/33USPC_SPO/mgsi7h/alma991003442469705808)
-- [*Introduction to Econometrics* by Stock and Watson](https://uspc-spo.primo.exlibrisgroup.com/permalink/33USPC_SPO/mgsi7h/alma991003436429705808)
-- [*Causal Inference: The Mixtape* by Cunningham](https://mixtape.scunning.com/)
-- [Ben Lambert's youtube channel](https://www.youtube.com/user/SpartacanUsuals)
+* *Introduction to Econometrics* by Stock and Watson
+]
+        
+.panel[.panel-name[Sugestões de Leitura]
+* [Introduction to Econometrics with R](https://www.econometrics-with-r.org/)
+
+* [Introduction to Econometrics with R - SciencesPO](https://scpoecon.github.io/ScPoEconometrics/)
+
+* [ModernDive](https://moderndive.com/)
+
+* [R for Data Science](https://r4ds.had.co.nz/)
+
+* [Awesome R Learning Resources](https://github.com/iamericfletcher/awesome-r-learning-resources)
 ]
 
-.pull-right[
-## Metrics and `R`
-- [ModernDive](https://moderndive.com/)
-- [Introduction to Econometrics with R](https://www.econometrics-with-r.org/)
-- [R for Data Science](https://r4ds.had.co.nz/)
-- [Awesome R Learning Resources](https://github.com/iamericfletcher/awesome-r-learning-resources)
+.panel[.panel-name[Apps Interativos]
+* [ScPoApps](https://github.com/ScPoEcon/ScPoApps)
+* [PSU Regression Apps](https://shinyapps.science.psu.edu/shinyapps/category/upper-division-apps/regression/)
+* [Didactic Modeling Process](https://danielrivera1.shinyapps.io/Regression2/)
+* [Radiant](https://vnijs.shinyapps.io/radiant/?SSUID=35c4322a7a)
 ]
 
+]
 
 ---
 
-# Course Policies
+# Regras Fundamentais
 
-*Be nice. Be honest. Don't cheat.*&lt;sup&gt;1&lt;/sup&gt;
+*Seja legal. Seja honesto. Não trapaceie.*&lt;sup&gt;1&lt;/sup&gt;
 
 .footnote[
-[1] [Andrew Heiss](https://evalsp20.classes.andrewheiss.com/syllabus/)' put it more concisely than I could!
+[1] [Andrew Heiss](https://evalsp20.classes.andrewheiss.com/syllabus/)' colocou de forma mais concisa do que eu poderia!
 ]
 
 --
 
-(BTW you should apply these principles outside of the classroom as well ***#lifeadvice*** 😉)
+(Aliás, você também deve aplicar esses princípios fora da sala de aula 😉)
 
 --
 
-.pull-left[
-***Slack***
+.panelset[
+.panel[.panel-name[***Conduta e expectativas da classe***]
+*Eletrônicos* : 📵 ***Banido*** o uso em sala de aula. Celulares, tablets e notebooks
 
-We will ***exclusively*** use Slack for our interactions.
+*Lista atrasada:* Não será aceita a menos que você tenha um motivo previsto nas normas.
 
-Please ***DO NOT*** contact me by email (unless there's a legitimate reason to).
+*Cola:* Você receberá 0 (ZERO). Não trapaceie, não vale a pena.
 
-I will be checking Slack sparingly so please help one another!
+*Trabalhos em grupo:* As listas são individuais. Isso não impede vocês de trocarem ideias e cada um escrever sua ***própria resposta***]
+
+.panel[.panel-name[***Teams***]
+
+Usaremos ***exclusivamente*** o Teams.
+
+Por favor, ***NÃO*** entre em contato comigo por e-mail.
+
+Verificarei o Teams com moderação, então por favor, ajudem uns aos outros!
+]
 ]
 
---
-
-.pull-right[
-***Class conduct and expectations***
-
-*Late work:* Won't be accepted unless you have a very good reason.
-
-*Cheating:* You will get 0. Just don't cheat, it's honestly not worth it.
-
-*Work in groups:* You can/should work in groups of 2 (3 max) on the quizzes.
-]
 
 ---
 
-# Mental Health
-
-&gt; ***Pay attention to your mental health in the same way you would your physical health.***
-
---
-
-Seeking help is a sign perceptive self-awareness, [not weakness](https://www.nytimes.com/2020/09/24/well/mind/cord-jefferson-emmy-black-mental-health.html).
-
-Especially important during this difficult period.
-
---
-
-Don't hesitate to ***reach out*** to your friends, family, a professor or me if you feel the need.
-
-***Sciences Po*** offers free and confidential [psychological support services](https://www.sciencespo.fr/students/en/living/health/health-centre) with professionals.
-
----
-
-# Last But Not Least: Class Rep 🙋‍♂️ 🙋‍♀️
-
-.center[![:scale 60%](chapter_intro_files/figure-html/notme.gif)]
-
----
+layout: false
 
 class: title-slide-final, middle
-background-image: url(../img/logo/ScPo-econ.png)
-background-size: 250px
-background-position: 9% 19%
+background-image: url(../img/logo/UdescEsag.jpeg)
+background-size: 350px
+background-position: 9% 9%
 
-# SEE YOU NEXT WEEK!
+# ATÉ A PRÓXIMA AULA!
 
-
+.footnote[
+[1]: Este slides foram baseados nas aulas de econometria da [SciencesPo Department of Economics](https://github.com/ScPoEcon/ScPoEconometrics-Slides)
+]
 
 
 |                                                                                                            |                                   |
 | :--------------------------------------------------------------------------------------------------------- | :-------------------------------- |
-| &lt;a href="https://github.com/ScPoEcon/ScPoEconometrics-Slides"&gt;.ScPored[&lt;i class="fa fa-link fa-fw"&gt;&lt;/i&gt;] | Slides |
-| &lt;a href="https://scpoecon.github.io/ScPoEconometrics"&gt;.ScPored[&lt;i class="fa fa-link fa-fw"&gt;&lt;/i&gt;] | Book |
-| &lt;a href="http://twitter.com/ScPoEcon"&gt;.ScPored[&lt;i class="fa fa-twitter fa-fw"&gt;&lt;/i&gt;]                          | @ScPoEcon                         |
-| &lt;a href="http://github.com/ScPoEcon"&gt;.ScPored[&lt;i class="fa fa-github fa-fw"&gt;&lt;/i&gt;]                          | @ScPoEcon                       |
+| &lt;a href="https://github.com/rfbressan/econometria_slides"&gt;.ScPored[&lt;i class="fa fa-link fa-fw"&gt;&lt;/i&gt;] | Slides |
+| &lt;a href="http://github.com/rfbressan"&gt;.ScPored[&lt;i class="fa fa-github fa-fw"&gt;&lt;/i&gt;] | @rfbressan |
 
 
     </textarea>
