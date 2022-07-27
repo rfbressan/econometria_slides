@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Econometria I</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Rafael Bressan" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/5235085b15.js"></script>
+    <link rel="stylesheet" href="../css/scpo.css" type="text/css" />
+    <link rel="stylesheet" href="../css/scpo-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Econometria I
+]
+.subtitle[
+## Regressão Linear Simples
+]
+.author[
+### Rafael Bressan
+]
+.date[
+### UDESC/Esag </br> 2022-07-27
+]
+
+---
+
+
+layout: true
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/Esag.jpeg" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+---
+
+
+
+
+
+# Hoje - Econometria de verdade finalmente ✌️
+
+* Introdução ao ***Modelo de Regressão Linear Simples*** e ***Mínimos Quadrados Ordinários (MQO)*** *estimativa*.
+
+* Aplicação empírica: *tamanho da turma* e *desempenho do aluno*
+
+---
+
+# Tamanho da turma e desempenho dos alunos
+
+* Quais políticas *conduzem* a um melhor aprendizado dos alunos?
+
+* A redução do tamanho das turmas está no centro dos debates sobre políticas educacionais há *décadas*.
+
+--
+
+* Usaremos dados de um artigo famoso de [Joshua Angrist e Victor Lavy (1999)](https://economics.mit.edu/files/8273).
+
+* Consiste em resultados de testes e características de classe/escola para alunos da quinta série (10-11 anos) em escolas primárias públicas judaicas em Israel em 1991.
+
+* Testes nacionais mediram habilidades de *matemática* e (hebraico) de *leitura*. As pontuações brutas foram dimensionadas de 1 a 100.
+
+---
+
+class:: inverse
+
+# Tarefa 1: Conhecendo os dados
+
+1. Carregue os dados [daqui](https://www.dropbox.com/s/wwp2cs9f0dubmhr/grade5.dta?dl=1) como `grades`. *Dica: Use `read_dta` do pacote `haven` para importar o arquivo, que possui o formato .dta.* (FYI: *.dta* é a extensão de arquivos de dados do [*Stata*](https://www.stata.com/))
+
+1. Descreva o conjunto de dados:
+
+   * Qual é a unidade de observação, ou seja, a que corresponde cada linha?
+   * Quantas observações existem?
+   * Visualize o conjunto de dados. Que variáveis temos? A que correspondem as variáveis `avgmath` e `avgverb`?
+   * Use a função `skim` do pacote `skimr` para obter estatísticas resumidas comuns para as variáveis `classize`, `avgmath` e `avgverb`. (*Dica: use `dplyr` para `selecionar` as variáveis e então simplesmente canalize (pipe `%&gt;%`) `skim()`.*)
+
+1. Calcule a correlação entre o tamanho da turma e as notas de matemática e hebraico. A relação é positiva/negativa, forte/fraca?
+
+
+
+---
+
+# Tamanho da turma e desempenho: gráfico de dispersão
+
+.pull-left[
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-2-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-3-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+* Associação um tanto positiva conforme sugerido pelas correlações. Vamos calcular a pontuação média por tamanho de turma para ver as coisas com mais clareza!
+
+---
+
+# Tamanho da turma e desempenho: gráfico de dispersão agrupado
+
+.pull-left[
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-4-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-5-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Tamanho da turma e desempenho: gráfico de dispersão agrupado
+
+* Vamos nos concentrar primeiro nas pontuações de matemática e, para simplificar visualmente, ampliaremos
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-6-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Tamanho da turma e desempenho: linha de regressão
+
+Como resumir visualmente a relação: **uma linha através do gráfico de dispersão**
+
+--
+
+.left-wide[
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-7-1.svg" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+--
+
+.right-thin[
+&lt;br&gt;
+
+* Uma *linha*! Excelente. Mas **qual** linha? Esta?
+
+* Essa é uma linha *plana*. Mas a pontuação média em matemática *aumenta* com o tamanho da turma 😩
+
+]
+
+---
+
+# Tamanho da turma e desempenho: linha de regressão
+
+Como resumir visualmente a relação: **uma linha através do gráfico de dispersão**
+
+.left-wide[
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-8-1.svg" style="display: block; margin: auto auto auto 0;" /&gt;
+]
+
+.right-thin[
+&lt;br&gt;
+
+* **Aquela**?
+
+* Um pouco melhor! Tem um **coeficiente angular** e um **intercepto** 😐
+
+* Precisamos de uma regra para decidir! 
+
+]
+
+
+---
+
+# Regressão Linear Simples
+
+Vamos formalizar um pouco o que estamos fazendo até agora.
+
+* Estamos interessados na relação entre duas variáveis:
+
+--
+
+   * uma __variável de resultado__ (também chamada de __variável dependente__):
+   *pontuação média em matemática* `\((y)\)`
+  
+--
+  
+   * uma __variável explicativa__ (também chamada de __variável independente__ ou __regressor__):
+   *tamanho da turma* `\((x)\)`
+  
+--
+
+* Para cada classe `\(i\)` observamos o par `\(\{(x_i, y_i)\}_{i\in\mathcal{I}}\)` e, portanto, podemos traçar a *distribuição conjunta* do tamanho da classe e da pontuação média em matemática.
+
+--
+
+* Resumimos essa relação com uma linha (por enquanto). A equação para tal linha com um intercepto `\(b_0\)` e uma inclinação (ou coeficiente angular) `\(b_1\)` é:
+     $$
+     \widehat{y}_i = b\_0 + b\_1 x\_i
+     $$
+
+--
+
+* `\(\widehat{y}_i\)` é nossa *previsão* para `\(y\)` na observação `\(i\)` `\((y_i)\)` dado nosso modelo (ou seja, a linha).
+
+---
+
+# Regressão Linear Simples: Resíduos
+
+* Se todos os pontos estivessem __sobre__ a linha, então `\(\widehat{y}_i = y_i\)`, e não haveria resíduos.
+
+--
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-9-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Regressão Linear Simples: Resíduos
+
+* Se todos os pontos estivessem __sobre__ a linha, então `\(\widehat{y}_i = y_i\)`, e não haveria resíduos.
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-10-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Regressão Linear Simples: Resíduos
+
+* Se todos os pontos estivessem __sobre__ a linha, então `\(\widehat{y}_i = y_i\)`, e não haveria resíduos.
+
+* No entanto, como na maioria dos casos a *variável dependente* `\((y)\)` não é explicada *apenas*  pela *variável independente* escolhida `\((x)\)`, `\(\widehat{y}_i \neq y_i\)`, ou seja, exite um __erro__ de previsão.
+Este __erro__&lt;sup&gt;1&lt;/sup&gt; é chamado de __resíduo__.
+
+.footnote[
+[1]: Aqui o termo erro não se refere ao erro populacional, outro conceito.
+]
+
+--
+
+* No ponto `\((x_i,y_i)\)`, denotamos esse resíduo por `\(e_i\)` .
+
+--
+
+* Os *dados reais* `\((x_i,y_i)\)` podem ser escritos como *previsão + resíduo*:
+  $$
+  y_i = \widehat y_i + e_i \implies y_i = b_0 + b_1 x_i + e_i
+  $$
+
+
+---
+
+# Regressão linear simples: graficamente
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-11-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Regressão linear simples: graficamente
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-12-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Regressão linear simples: graficamente
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-13-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Regressão linear simples: graficamente
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-14-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Regressão linear simples: graficamente
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-15-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+# Regressão linear simples: graficamente
+
+.left-wide[
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-16-1.svg" width="100%" style="display: block; margin: auto;" /&gt;
+]
+
+.right-thin[
+&lt;br&gt;
+&lt;br&gt;
+.udescgreen.big.center[**Qual critério de ajuste utilizar?**]
+]
+---
+
+# **M**ínimos **Q**uadrados **O**rdinários (MQO)
+
+--
+
+* Erros de sinal diferente `\((+/-)\)` se cancelam, então consideramos **resíduos ao quadrado**
+`$$\forall i \in \mathcal{I} = [1, \ldots, N], \quad e_i^2 = (y_i - \widehat y_i)^2 = (y_i - b_0 - b_1 x_i)^2$$`
+
+--
+.pull-left[
+&lt;br&gt;
+* Escolha `\((b_0,b_1)\)` tal que: 
+
+`$$(b_0,b_1) = \underset{b_0, b_1}{\arg\min}\sum_{i = 1}^N e_1^2 + \dots + e_N^2$$`
+]
+
+--
+
+.pull-right[
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-17-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# **M**ínimos **Q**uadrados **O**rdinários (MQO)
+
+* Escolha `\((b_0,b_1)\)` tal que `\(\sum_{i = 1}^N e_1^2 + \dots + e_N^2\)` seja **o mínimo possível**.
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-18-1.svg" style="display: block; margin: auto;" /&gt;
+
+---
+
+# **M**ínimos **Q**uadrados **O**rdinários (MQO)
+
+&lt;iframe src="https://gustavek.shinyapps.io/reg_simple/" width="100%" height="400px" data-external="1" style="border: none;"&gt;&lt;/iframe&gt;
+
+---
+
+# **M**ínimos **Q**uadrados **O**rdinários (MQO)
+
+&lt;iframe src="https://gustavek.shinyapps.io/SSR_cone/" width="100%" height="400px" data-external="1" style="border: none;"&gt;&lt;/iframe&gt;
+
+---
+
+# **M**ínimos **Q**uadrados **O**rdinários (MQO): Coeficientes
+
+* **MQO**: método de *estimativa* que consiste em minimizar a soma dos quadrados dos resíduos.
+
+* Produz soluções __únicas__ para este problema de minização. .udescgreen[_Como?_]
+
+* Então, quais são as fórmulas para `\(b_0\)` (intercepto) e `\(b_1\)` (inclinação)?
+
+--
+
+* Em nosso caso de variável independente única:
+
+&gt; ### __Inclinação: `\(b_1^{OLS} = \frac{cov(x,y)}{var(x)}\)` `\(\hspace{2cm}\)` Intercepto: `\(b_0^{OLS} = \bar{y } - b_1\bar{x}\)`__
+
+--
+
+* Essas fórmulas não surgem como mágica. Elas podem ser encontradas resolvendo a minimização de erros quadráticos. A matemática pode ser encontrada [aqui](https://www.youtube.com/watch?v=Hi5EJnBHFB4) para quem estiver interessado.
+
+---
+
+# **M**ínimos **Q**uadrados **O**rdinários (MQO): Interpretação
+
+Por enquanto, suponha que tanto a variável dependente `\((y)\)` quanto a variável independente `\((x)\)` sejam numéricas.
+
+--
+
+&gt; Intercepto `\((b_0)\)`: **O valor previsto de `\(y\)` quando `\(x = 0\)`.**
+
+--
+
+&gt; Inclinação `\((b_1)\)`: **A mudança prevista, em média, no valor de `\(y\)` *associada* a um aumento de uma unidade em `\(x\)`.**
+
+--
+
+* ⚠️ Observe que usamos o termo *associada*, **claramente evitando interpretar `\(b_1\)` como o impacto causal de `\(x\)` em `\(y\)`**. Para fazer tal afirmação, precisamos que algumas condições específicas sejam atendidas. Este é o ramo da econometria que trata de ***inferência causal***.
+
+--
+ 
+* Observe também que a unidade de `\(x\)` é importante para a interpretação (e magnitude!) de `\(b_1\)`.
+
+--
+
+* **Você precisa ser explícito sobre qual é a unidade de `\(x\)`!**
+
+---
+
+# MQO com o `R`
+
+* Em `R`, as regressões OLS são estimadas usando a função `lm`.
+
+* É assim que funciona:
+
+  
+  ```r
+  lm(formula = dep_var ~  indep_var, data = df)
+  ```
+--
+
+## Tamanho da turma e desempenho dos alunos
+
+Vamos estimar o seguinte modelo por MQO: `\(\textrm{mtm_media}_i = b_0 + b_1 \textrm{tamanho}_i + e_i\)`
+
+.pull-left[
+
+```r
+# Regressão MQO da pontuação média de matemática 
+# no tamanho da turma 
+lm(avgmath_cs ~ classize, grades_avg_cs) 
+```
+]
+
+.pull-right[
+
+```
+## 
+## Call:
+## lm(formula = avgmath_cs ~ classize, data = grades_avg_cs)
+## 
+## Coefficients:
+## (Intercept)     classize  
+##     61.1092       0.1913
+```
+]
+
+---
+
+# **M**ínimos **Q**uadrados **O**rdinários (MQO): Previsão
+
+
+```
+## 
+## Call:
+## lm(formula = avgmath_cs ~ classize, data = grades_avg_cs)
+## 
+## Coefficients:
+## (Intercept)     classize  
+##     61.1092       0.1913
+```
+
+--
+
+Isso implica (abstraindo o subscrito `\(_i\)` para simplificar):
+
+
+$$
+`\begin{align}
+\widehat y &amp;= b_0 + b_1 x \\
+\widehat {\text{média de matemática}} &amp;= b_0 + b_1 \cdot \text{tamanho da turma} \\
+\widehat {\text{média de matemática}} &amp;= 61,11 + 0,19 \cdot \text{tamanho da turma}
+\end{align}`
+$$
+
+--
+
+Qual é a pontuação média prevista para uma turma de 26 alunos? (Usando os coeficientes *econtrados*.)
+
+$$
+`\begin{aligned}
+\widehat {\text{média de matemática}} &amp;= 61.11 + 0.19 \cdot 26 \\
+\widehat {\text{média de matemática}} &amp;= 66.08
+\end{aligned}`
+$$
+
+---
+
+class: inverse
+
+# Tarefa 2: Regressão MQO
+
+
+Execute o seguinte código para agregar os dados no nível de tamanho da classe:
+
+
+```r
+grades_avg_cs &lt;- grades %&gt;%
+  group_by(classize) %&gt;%
+  summarise(avgmath_cs = mean(avgmath),
+            avgverb_cs = mean(avgverb))
+```
+
+1. Regredir a pontuação verbal média (variável dependente) no tamanho da turma (variável independente). Interprete os coeficientes.
+
+1. Calcule os coeficientes MQO `\(b_0\)` e `\(b_1\)` da regressão anterior usando as fórmulas do slide 25. (*Dica:* você precisa usar as funções `cov`, `var` e `mean`.)
+
+1. Rode a regressão com a função `lm` e compare os coeficientes obtidos.
+
+1. Qual é a pontuação verbal média prevista quando o tamanho da turma é igual a 0? (Isso faz sentido?!)
+
+1. Qual é a pontuação verbal média prevista quando o tamanho da turma é igual a 30 alunos?
+---
+
+# Previsões e Resíduos: Propriedades
+
+.pull-left[
+* __A média (ou soma) dos resíduos é 0.__
+   `$$\begin{align} \frac{1}{N} \sum_{i=1}^N e_i &amp;= \frac{1}{N} \sum_{i=1}^N (y_i - \widehat y_i ) \\ &amp;= \bar{y} - \frac{1}{N} \sum_{i=1}^N \widehat{y}_i \\\ &amp;= 0 \end{align}$$`
+
+* __A média de `\(\widehat{y}_i\)` é igual a `\(\bar{y}\)`.__
+     `$$\begin{align} \frac{1}{N} \sum_{i=1}^N \widehat{y}_i &amp;= \frac{1}{N} \sum_{i=1}^N b_0 + b_1 x_i \\ &amp;= b_0 + b_1 \bar{x} = \bar{y} \end{align}$$`
+
+]
+--
+
+.pull-right[
+* __ Regressor e resíduos não são correlacionados (por imposição).__
+
+
+   `$$Cov(x_i, e_i) = 0$$`
+
+
+* __Previsão e resíduos não são correlacionados.__
+
+   `$$\begin{align} Cov(\widehat y_i, e_i) &amp;= Cov(b_0 + b_1x_i, e_i) \\ &amp;= b_1Cov(x_i,e_i) \\ &amp;= 0 \end{align}$$`
+  
+   Já que `\(Cov(a + bx, y) = bCov(x,y)\)`.
+
+]
+
+---
+
+# Suposição de Linearidade: Visualize seus Dados!
+
+* É importante ter em mente que covariância, correlação e regressão simples MQO medem apenas **relações lineares** entre duas variáveis.
+
+* Dois conjuntos de dados com correlações *idênticas* e linhas de regressão podem parecer *muito* diferentes.
+
+---
+
+# Suposição de linearidade: Anscombe
+
+* Francis Anscombe (1973) apresentou 4 conjuntos de dados com estatísticas idênticas. Mas olhe!
+
+.left-wide[
+
+&lt;img src="chapter_slr_pt_files/figure-html/unnamed-chunk-26-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.right-thin[
+&lt;/br&gt;
+&lt;/br&gt;
+
+&lt;table class="table table-striped" style="font-size: 20px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; dataset &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; cov &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; var(y) &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; var(x) &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.501 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.127 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.500 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.128 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.497 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.123 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.499 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.123 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+]
+---
+
+# Relações não-lineares nos dados?
+
+.pull-left[
+* Podemos acomodar relações não lineares em regressões.
+
+* Basta adicionar um termo de *ordem superior* como este:
+     $$
+     y_i = b_0 + b_1 x_i + b_2 x_i^2 + e_i
+     $$
+    
+* Esta é uma __regressão múltipla__ (em 2 semanas!)
+]
+--
+
+.pull-right[
+* Por exemplo, suponha que tenhamos esses dados e ajustemos o modelo de regressão anterior:
+    &lt;img src="chapter_slr_pt_files/figure-html/non-line-cars-ols2-1.svg" style="display: block; margin: auto;" /&gt;
+]
+
+---
+
+# Análise de variância - ANOVA
+
+* Lembre-se que `\(y_i = \widehat{y}_i + e_i\)`.
+
+* Temos a seguinte decomposição:
+    `$$\begin{align} Var(y) &amp;= Var(\widehat{y} + e)\\&amp;= Var(\widehat{y}) + Var(e) + 2 Cov(\widehat{y}, e)\\&amp;= Var(\widehat{y}) + Var(e)\end{align}$$`
+    
+
+* __Variação total (SST) = explicado pelo modelo(SSE) + Inexplicável (SSR)__
+
+---
+
+# Qualidade de ajuste
+
+* O __ `\(R^2\)` __ mede quão bem o __model se ajusta aos dados__.
+
+--
+
+$$
+R^2 = \frac{\text{variância explicada}}{\text{variância total}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]
+$$
+
+--
+    
+* `\(R^2\)` próximo de `\(1\)` indica um poder explicativo __muito ***alto***__ do modelo.
+
+* `\(R^2\)` próximo a `\(0\)` indica um poder explicativo __muito ***baixo***__ do modelo.
+
+--
+
+* *Interpretação:* um `\(R^2\)` de 0,5, por exemplo, significa que a variação em `\(x\)` "explica" 50% da variação em `\(y\)`.
+
+--
+    
+* ⚠️ Baixo `\(R^2\)` __NÃO__ significa que um modelo é inútil! Lembre-se de que a econometria está interessada muitas vezes em ***mecanismos causais***, não necessariamente em previsão!
+
+--
+    
+* ⚠️ O `\(R^2\)` __NÃO__ é um indicador de um relacionamento causal!
+
+---
+
+class: inverse
+
+# Tarefa 3: `\(R^2\)` e qualidade de ajuste
+
+
+1. Regresse `avgmath_cs` em `classize`. Atribua a um objeto `math_reg`.
+
+1. Passe `math_reg` na função `summary()`. Qual é o (múltiplo) `\(R^2\)` para esta regressão? Como você pode interpretá-lo?
+
+1. Calcule a correlação ao quadrado entre `classize` e `avgmath_cs`. O que isso lhe diz sobre a relação entre `\(R^2\)` e a correlação em uma regressão com apenas um regressor?
+
+1. Repita os passos 1 e 2 para `avgverb_cs`. Para qual exame a variação no tamanho da turma explica mais a variação nas notas dos alunos?
+
+1. (Opcional) Instale e carregue o pacote `broom`. Passe `math_reg` na função `augment()` e atribua-o a um novo objeto. Use a variação em `avgmath_cs` (SST) e a variação em `.fitted` (valores previstos; SSE) para encontrar o `\(R^2\)` usando a fórmula do slide anterior.
+
+---
+
+
+layout: false
+
+class: title-slide-final, middle
+background-image: url(../img/logo/UdescEsag.jpeg)
+background-size: 350px
+background-position: 9% 9%
+
+# ATÉ A PRÓXIMA AULA!
+
+.footnote[
+[1]: Este slides foram baseados nas aulas de econometria da [SciencesPo Department of Economics](https://github.com/ScPoEcon/ScPoEconometrics-Slides)
+]
+
+
+|                                                                                                            |                                   |
+| :--------------------------------------------------------------------------------------------------------- | :-------------------------------- |
+| &lt;a href="https://github.com/rfbressan/econometria_slides"&gt;.ScPored[&lt;i class="fa fa-link fa-fw"&gt;&lt;/i&gt;] | Slides |
+| &lt;a href="http://github.com/rfbressan"&gt;.ScPored[&lt;i class="fa fa-github fa-fw"&gt;&lt;/i&gt;] | @rfbressan |
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../js/ru_xaringan.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
