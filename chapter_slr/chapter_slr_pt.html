@@ -26,7 +26,7 @@ class: center, middle, inverse, title-slide
 ### Rafael Bressan
 ]
 .date[
-### UDESC/Esag </br> 2022-07-27
+### UDESC/Esag </br> 2022-07-28
 ]
 
 ---
@@ -46,7 +46,256 @@ layout: true
 
 * Introdução ao ***Modelo de Regressão Linear Simples*** e ***Mínimos Quadrados Ordinários (MQO)*** *estimativa*.
 
+* População vs Amostra
+
 * Aplicação empírica: *tamanho da turma* e *desempenho do aluno*
+
+---
+
+# População vs Amostra
+
+Escrevemos nosso modelo populacional (simples)
+
+$$ y_i = \beta_0 + \beta_1 x_i + u_i $$
+
+--
+
+* Os parâmetros populacionais, `\(\beta_0\)` e `\(\beta_1\)`, são definidos para que a equação acima seja uma "boa" representação
+
+* Define o modelo de regressão linear (simples)
+
+--
+
+`$$y_i = \underbrace{\widehat\beta_0 + \widehat\beta_1 x_i}_{\widehat{y_i}} + e_i$$`
+
+* Equivalente amostral: `\(y_i=\widehat{y_i}+e_i\)`
+
+* Observação = Previsão + resíduo
+
+---
+
+# População *vs.* amostra
+
+**Pergunta:** Por que nos preocupamos com *população vs. amostra*?
+
+--
+
+
+
+.pull-left[
+
+&lt;img src="chapter_slr_pt_files/figure-html/pop1-1.svg" width="400px" style="display: block; margin: auto;" /&gt;
+
+.center[**População**]
+
+]
+
+--
+
+.pull-right[
+
+&lt;img src="chapter_slr_pt_files/figure-html/scatter1-1.svg" width="400px" height="250px" style="display: block; margin: auto;" /&gt;
+
+.center[**Relação Populacional**]
+
+$$ y_i = 2.53 + 0.57 x_i + u_i $$
+
+$$ y_i = \beta_0 + \beta_1 x_i + u_i $$
+]
+
+---
+
+.pull-left[
+
+&lt;img src="chapter_slr_pt_files/figure-html/sample1-1.svg" style="display: block; margin: auto;" /&gt;
+
+.center[**Amostra 1:** 30 indivíduos aleatórios]
+
+]
+
+
+.pull-right[
+
+&lt;img src="chapter_slr_pt_files/figure-html/sample1 scatter-1.svg" height="350px" style="display: block; margin: auto;" /&gt;
+
+.center[
+
+**Relação Populacional**
+&lt;br&gt;
+`\(y_i = 2.53 + 0.57 x_i + u_i\)`
+
+**Relação Amostral**
+&lt;br&gt;
+`\(\hat{y}_i = 2.36 + 0.61 x_i\)`
+]
+
+]
+
+---
+count: false
+
+.pull-left[
+
+&lt;img src="chapter_slr_pt_files/figure-html/sample2-1.svg" style="display: block; margin: auto;" /&gt;
+
+.center[**Amostra 2:** 30 indivíduos aleatórios]
+
+]
+
+.pull-right[
+
+&lt;img src="chapter_slr_pt_files/figure-html/sample2 scatter-1.svg" height="350px" style="display: block; margin: auto;" /&gt;
+
+.center[
+
+**Relação Populacional**
+&lt;br&gt;
+`\(y_i = 2.53 + 0.57 x_i + u_i\)`
+
+**Relação Amostral**
+&lt;br&gt;
+`\(\hat{y}_i = 2.79 + 0.56 x_i\)`
+
+]
+
+]
+---
+count: false
+
+.pull-left[
+
+&lt;img src="chapter_slr_pt_files/figure-html/sample3-1.svg" style="display: block; margin: auto;" /&gt;
+
+.center[**Amostra 3:** 30 indivíduos aleatórios]
+
+]
+
+.pull-right[
+
+&lt;img src="chapter_slr_pt_files/figure-html/sample3 scatter-1.svg" height="350px" style="display: block; margin: auto;" /&gt;
+
+.center[
+
+**Relação Populacional**
+&lt;br&gt;
+`\(y_i = 2.53 + 0.57 x_i + u_i\)`
+
+**Relação Amostral**
+&lt;br&gt;
+`\(\hat{y}_i = 3.21 + 0.45 x_i\)`
+
+]
+
+]
+
+---
+layout: false
+class: clear, middle
+
+Vamos repetir isso ***10.000 vezes***.
+
+Este exercício é chamado de simulação (Monte Carlo).
+
+---
+layout: true
+
+&lt;div class="my-footer"&gt;&lt;img src="../img/logo/Esag.jpeg" style="height: 60px;"/&gt;&lt;/div&gt; 
+
+---
+
+
+# População *vs.* amostra
+
+**Pergunta:** Por que nos preocupamos com *população vs. amostra*?
+
+--
+
+.pull-left[
+&lt;img src="chapter_slr_pt_files/figure-html/simulation scatter2-1.png" height="400px" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+
+- Em **média**, nossas linhas de regressão combinam muito bem com a linha populacional.
+
+- No entanto, **linhas individuais** (amostras) podem realmente errar o alvo.
+
+- Diferenças entre amostras individuais e a população levam a uma **incerteza** para o econometrista.
+
+]
+
+---
+
+# População *vs.* amostra
+
+**Pergunta:** Por que nos preocupamos com *população vs. amostra*?
+
+
+**Resposta:** Incerteza importa.
+
+`\(\hat{\beta}\)` em si é uma variável aleatória dependente da amostra que é colhida. Quando pegamos uma amostra e fazemos uma regressão, não sabemos se é uma amostra 'boa' ( `\(\hat{\beta}\)` está próximo de `\(\beta\)`) ou uma 'amostra ruim' (nossa amostra difere muito da população).
+
+---
+
+# População *vs.* amostra
+
+
+## Incerteza
+
+Manter o controle dessa incerteza será um conceito-chave em toda a nossa disciplina
+
+- Estimativa de erros-padrão para nossas estimativas.
+
+- Testar hipóteses.
+
+- Correção de heterocedasticidade e autocorrelação.
+
+--
+
+Primeiro, vamos relembrar como obtemos essas estimativas de regressão (incertas).
+
+---
+# Regressão Linear Simples
+
+## Estimador
+
+Podemos estimar uma linha de regressão em .mono[R] (`lm(y ~ x, my_data)`) e .mono[Stata] (`reg y x`). Mas de onde vêm essas estimativas?
+
+Alguns slides atrás:
+
+&gt; $$ \hat{y}_i = \hat{\beta}_0 + \hat{\beta}_1 x_i $$
+&gt; que nos dá a linha de ***melhor ajuste*** em nosso conjunto de dados.
+Mas o que queremos dizer com "linha de melhor ajuste"?
+
+---
+
+# Ser o "melhor"
+
+**Pergunta:** O que queremos dizer com *linha de melhor ajuste*?
+
+--
+
+**Respostas:**
+
+- Em geral (econometria), *linha de melhor ajuste* significa a linha que minimiza a soma dos resíduos ao quadrado (SQR):
+
+.center[
+
+`\(\text{SQR} = \sum_{i = 1}^{n} e_i^2\quad\)` onde `\(\quad e_i = y_i - \hat{y}_i\)`
+
+]
+
+- Os **mínimos quadrados ordinários** (**MQO**) minimizam a soma dos resíduos ao quadrado.
+- Com base em um conjunto de hipóteses (geralmente aceitáveis), MQO:
+   - É não-viesado (e consistente)
+   - É o *melhor* estimador linear não-viesado (variância mínima) (BLUE)
+
+---
+
+# OLS *vs.* outras linhas/estimadores
+
 
 ---
 
@@ -600,7 +849,7 @@ grades_avg_cs &lt;- grades %&gt;%
     `$$\begin{align} Var(y) &amp;= Var(\widehat{y} + e)\\&amp;= Var(\widehat{y}) + Var(e) + 2 Cov(\widehat{y}, e)\\&amp;= Var(\widehat{y}) + Var(e)\end{align}$$`
     
 
-* __Variação total (SST) = explicado pelo modelo(SSE) + Inexplicável (SSR)__
+* __Variação total (SST) = explicado pelo modelo(SQR) + Inexplicável (SSR)__
 
 ---
 
@@ -611,7 +860,7 @@ grades_avg_cs &lt;- grades %&gt;%
 --
 
 $$
-R^2 = \frac{\text{variância explicada}}{\text{variância total}} = \frac{SSE}{SST} = 1 - \frac{SSR}{SST}\in[0,1]
+R^2 = \frac{\text{variância explicada}}{\text{variância total}} = \frac{SQR}{SST} = 1 - \frac{SSR}{SST}\in[0,1]
 $$
 
 --
@@ -647,7 +896,7 @@ class: inverse
 
 1. Repita os passos 1 e 2 para `avgverb_cs`. Para qual exame a variação no tamanho da turma explica mais a variação nas notas dos alunos?
 
-1. (Opcional) Instale e carregue o pacote `broom`. Passe `math_reg` na função `augment()` e atribua-o a um novo objeto. Use a variação em `avgmath_cs` (SST) e a variação em `.fitted` (valores previstos; SSE) para encontrar o `\(R^2\)` usando a fórmula do slide anterior.
+1. (Opcional) Instale e carregue o pacote `broom`. Passe `math_reg` na função `augment()` e atribua-o a um novo objeto. Use a variação em `avgmath_cs` (SST) e a variação em `.fitted` (valores previstos; SQR) para encontrar o `\(R^2\)` usando a fórmula do slide anterior.
 
 ---
 
