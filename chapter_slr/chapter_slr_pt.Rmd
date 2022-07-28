@@ -1217,6 +1217,8 @@ background-position: 9% 9%
 
 # ATÉ A PRÓXIMA AULA!
 
+Com a Lista 1 feita! `r emo::ji("white_check_mark")`
+
 .footnote[
 [1]: Este slides foram baseados nas aulas de econometria da [SciencesPo Department of Economics](https://github.com/ScPoEcon/ScPoEconometrics-Slides)
 ]
@@ -1226,3 +1228,4 @@ background-position: 9% 9%
 | :--------------------------------------------------------------------------------------------------------- | :-------------------------------- |
 | <a href="https://github.com/rfbressan/econometria_slides">.ScPored[<i class="fa fa-link fa-fw"></i>] | Slides |
 | <a href="http://github.com/rfbressan">.ScPored[<i class="fa fa-github fa-fw"></i>] | @rfbressan |
+| <a href="https://raw.githack.com/rfbressan/econometria_slides/master/chapter_slr/lista_slr_pt.html">.ScPored[<i class="fa fa-list fa-fw"></i>] | Lista 1 |
