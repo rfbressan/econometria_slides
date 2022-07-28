@@ -1,0 +1,125 @@
+---
+title: "Regressão Linear Simples"
+subtitle: "Lista de Exercícios"
+author: "Rafael Bressan"
+date: "UDESC/Esag </br> `r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Revisão de Estatística
+
+## Questão 1
+
+Considere duas variáveis aleatórias, $X$ e $Y$ , e demonstre, para o caso discreto ou contínuo a sua escolha, as seguintes propriedades:
+
+a) $\mathbb{E}_{X}[\mathbb{E}[Y \mid X]]=\mathbb{E}[Y]$ (Lei das expectativas iteradas)
+b) $\mathbb{E}[h(X) Y \mid X]=h(X) \mathbb{E}[Y \mid X]$, sendo $h$ uma função de $X$.
+c) $V(Y)=\mathbb{E}[V(Y \mid X)]+V(\mathbb{E}[Y \mid X])$ (Lei da Variância Total)
+d) (Desafio) $\mathbb{E}[Y \mid X]=\mathbb{E}[\mathbb{E}[Y \mid W] \mid X]$, se $X=f(W)$.
+
+Agora mostre que:
+
+e) Se $X$ é independente de $Y$, então $\rho(X, Y)=0$, sendo $\rho(.)$ a correlação entre duas variáveis aleatórias. Dica: $C(X, Y)=\mathbb{E}[X Y]-\mathbb{E}[X] \mathbb{E}[Y]$
+f) Se $X$ é independente de $Y$, então $\mathbb{E}[X \mid Y]=\mathbb{E}[X]$. Dica: Use o fato de que se $A \perp B$, então $P(A \mid B)=P(A)$.
+g) Mostre que $C(X, Y)=C(X, \mathbb{E}[Y \mid X])$
+h) Mostre que $C(X,\{Y-\mathbb{E}[Y \mid X]\})=0$. Dica: Podemos definir $Y-\mathbb{E}[Y \mid X]$ $\operatorname{como} \varepsilon$.
+
+## Questão 2
+
+Sobre os conceitos de esperança condicional e independência, responda:
+
+a) Considere duas variáveis aleatórias $X$ e $Y$ com distribuição conjunta dada por:
+$$
+f(x, y)= \begin{cases}x+y, & \text { se } 0<x \text { e } y<1 \\ 0, & \text { caso contrário }\end{cases}
+$$
+
+Encontre $f_{Y}(y), f_{Y \mid X}(y \mid x), \mathbb{E}[Y], \mathbb{E}[Y \mid X]$ e $\mathbb{E}[\mathbb{E}[Y \mid X]]$
+
+b) Há três formas de independência entre duas variáveis aleatórias:
+(i) independência plena;
+(ii) independência em média condicional;
+(iii) independência linear.
+
+Defina cada uma. Qual é mais forte? Qual é mais fraca?
+
+c) Considere duas variáveis aleatórias $X$ e $Y$. Suponha que:
+$$
+f_{X}(x)= \begin{cases}1, & \text { se } 0<x<1 \\ 0, & \text { caso contrário }\end{cases}
+$$
+$$
+f_{Y \mid X}(y \mid x)=\left\{\begin{array}{l}
+1 / x, \quad \text { se } 0<y<x \\
+0, \quad \text { caso contrário }
+\end{array}\right.
+$$
+
+Calcule $\mathrm{E}[\mathrm{Y}]$
+
+# Regressão Linear
+
+## Questão 3
+
+Defina com a notação formal e explique com suas próprias palavras os seguintes
+conceitos:
+
+a) parâmetro, estimador e estimativa;
+b) erro e resı́duo;
+c) homoscedasticidade e heteroscedasticidade;
+d) $R^2$ ;
+e) dados em cross section, séries temporais e dados em painel;
+f) modelo populacional;
+g) exogeneidade;
+h) amostra aleatória.
+
+## Questão 4
+
+Considere o modelo de regressão simples a seguir:
+
+$$
+y_{i}=\alpha+\beta x_{i}+\varepsilon_{i}
+$$
+
+e assumimos que $\mathbb{E}\left[\varepsilon_{i} \mid x_{i}\right]=0$.
+
+a) Utilize o método de mínimos quadrados ordinários para encontrar um estimador para $\alpha$ e para $\beta$.
+
+b) Vamos agora derivar os estimadores populacionais.
+(i) Partindo de $\mathbb{E}\left[\varepsilon_{i} \mid x_{i}\right]=0$, prove que $\mathbb{E}\left[\varepsilon_{i}\right]=0$.
+(ii) Usando o resultado do item anterior e o fato de que $\varepsilon_{i}=y_{i}-\alpha-\beta x_{i}$, mostre que $\alpha=\mathbb{E}\left[y_{i}\right]-\beta \mathbb{E}\left[x_{i}\right]$
+(iii) Partindo de $\mathbb{E}\left[\varepsilon_{i} \mid x_{i}\right]=0$, prove que $\mathbb{E}\left[\varepsilon_{i} x_{i}\right]=0$.
+(iv) Usando o resultado do item anterior e o fato de que $\varepsilon_{i}=y_{i}-\alpha-\beta x_{i}$, mostre que $\beta=\frac{C\left(x_{i}, y_{i}\right)}{V\left(x_{i}\right)}$.
+
+c) Suponha que duas variáveis $(Y$ e $X)$ tem correlação igual a zero. Você decide regredir uma na outra. Qual o coeficiente de $\beta$ que você deve encontrar? E de $\alpha$ ?
+
+d) Suponha que duas variáveis $(Y$ e $X)$ tem correlação igual a 1. Você decide regredir uma na outra e encontra um $\beta$ próximo de 0 . Como você explica isso?
+
+## Questão 5 - programação
+
+Um pesquisador busca entender a relação que existe entre a idade dos indivı́duos
+e seus salários. Para isso, ele reune uma base de dados com informações de idade
+e salário para 991 indivı́duos e pretende rodar uma regressão simples (MQO)
+com eles 2 . O pesquisador irá rodar a seguinte regressão
+
+$$
+Wage_i = \beta_0 + \beta_1 Age_i + u_i$$
+
+Utilizando a base de dados que está no Teams (`base_lista1.csv`), responda as
+questões abaixo utilizando o R.
+
+a) Plote os dados em um gráfico, com a variável de idade no eixo x e a
+variável de salário no eixo y.
+
+b) Obtenha e interprete os coeficientes da regressão por MQO.
+
+c)Faça uma transformação logarı́tmica na variável salário e rode a regressão
+novamente. Como deve-se interpretar os coeficientes agora?
+
+d) Com base no coeficiente da variável de idade, o que se pode dizer sobre
+a relação entre as duas variáveis? Existe uma relação causal entre elas?
+
+e) Com base no grau de ajuste da regressão, o que se pode dizer sobre a
+relação entre as duas variáveis? Existe uma relação causal entre elas?

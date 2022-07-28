@@ -74,9 +74,9 @@ theme_simple <- theme_bw() + theme(
 
 # Hoje - Econometria de verdade finalmente `r emo::ji("v")`
 
-* Introdução ao ***Modelo de Regressão Linear Simples*** e ***Mínimos Quadrados Ordinários (MQO)*** *estimativa*.
-
 * População vs Amostra
+
+* Introdução ao ***Modelo de Regressão Linear Simples*** e ***Mínimos Quadrados Ordinários (MQO)*** *estimativa*.
 
 * Aplicação empírica: *tamanho da turma* e *desempenho do aluno*
 
